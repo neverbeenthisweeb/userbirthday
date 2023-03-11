@@ -44,22 +44,22 @@ func (ub UserBirthday) GiveBirthdayPromo(ctx context.Context) error {
 		// TODO: Can implement DB transaction between create promo and set promo
 		// to reduce stale data in DB
 		promo := model.NewBirthdayPromo(user.Name)
-		createdPrm, err := ub.repoPromo.Create(ctx, promo)
+		createdPromo, err := ub.repoPromo.CreatePromo(ctx, promo)
 		if err != nil {
 			common.LogErr(ctx, "Failed to create birthday promo", err)
 			return err
 		}
 
 		// Set birthday promo to user
-		err = ub.repoUser.SetPromo(ctx, user.ID, createdPrm.ID)
+		err = ub.repoUser.SetUserPromo(ctx, user.ID, createdPromo.ID)
 		if err != nil {
-			common.LogErr(ctx, fmt.Sprintf("Failed to set user ID=%s with promo ID=%s", user.ID, createdPrm.ID), err)
+			common.LogErr(ctx, fmt.Sprintf("Failed to set user ID=%s with promo ID=%s", user.ID, createdPromo.ID), err)
 			return err
 		}
 
 		// Send notification
 		// TODO: As an improvement, can send notification in async
-		err = ub.sendNotification(ctx, user, createdPrm)
+		err = ub.sendNotification(ctx, user, createdPromo)
 		if err != nil {
 			common.LogErr(ctx, "Failed to send notification", err)
 		}

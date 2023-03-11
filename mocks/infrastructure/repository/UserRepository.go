@@ -40,8 +40,8 @@ func (_m *UserRepository) GetVerifiedBirthdayUsers(ctx context.Context) ([]model
 	return r0, r1
 }
 
-// SetPromo provides a mock function with given fields: ctx, userID, promoCode
-func (_m *UserRepository) SetPromo(ctx context.Context, userID string, promoCode string) error {
+// SetUserPromo provides a mock function with given fields: ctx, userID, promoCode
+func (_m *UserRepository) SetUserPromo(ctx context.Context, userID string, promoCode string) error {
 	ret := _m.Called(ctx, userID, promoCode)
 
 	var r0 error

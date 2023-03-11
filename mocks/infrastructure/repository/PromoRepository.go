@@ -14,8 +14,8 @@ type PromoRepository struct {
 	mock.Mock
 }
 
-// Create provides a mock function with given fields: ctx, m
-func (_m *PromoRepository) Create(ctx context.Context, m model.Promo) (model.Promo, error) {
+// CreatePromo provides a mock function with given fields: ctx, m
+func (_m *PromoRepository) CreatePromo(ctx context.Context, m model.Promo) (model.Promo, error) {
 	ret := _m.Called(ctx, m)
 
 	var r0 model.Promo

@@ -7,9 +7,13 @@ import (
 
 type UserRepository interface {
 	GetVerifiedBirthdayUsers(ctx context.Context) ([]model.User, error)
-	SetPromo(ctx context.Context, userID, promoCode string) error
+	SetUserPromo(ctx context.Context, userID, promoCode string) error
 }
 
 type PromoRepository interface {
-	Create(ctx context.Context, m model.Promo) (model.Promo, error)
+	CreatePromo(ctx context.Context, m model.Promo) (model.Promo, error)
+}
+
+type NotificationTemplateRepository interface {
+	GetNotificationTemplate(ctx context.Context, ID string) (string, error)
 }
