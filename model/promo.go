@@ -14,11 +14,11 @@ const (
 	PromoUseLimitBirthday = 1
 )
 
-// FIXME: Remove "name" from docs
 type Promo struct {
 	ID        string
 	Code      string
 	Type      string
+	UseCount  int
 	UseLimit  int
 	ValidFrom time.Time
 	ValidTo   time.Time

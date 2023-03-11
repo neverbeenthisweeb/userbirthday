@@ -140,8 +140,9 @@ func TestUserBirthday_GiveBirthdayPromo(t *testing.T) {
 					Once()
 				notif.On("Send", mock.Anything, notification.NotificationRequest{
 					NotificationType: notification.NotificationTypeEmail,
+					Subject:          notification.DefaultNotificationSubject,
+					Body:             notification.DefaultNotificationBody,
 					Target:           "user.name@email.com",
-					TemplateID:       "email.birthday",
 					TemplateData: map[string]string{
 						"username":  "User Name",
 						"promocode": fakePromo(nil).Code,
@@ -151,8 +152,9 @@ func TestUserBirthday_GiveBirthdayPromo(t *testing.T) {
 					Once()
 				notif.On("Send", mock.Anything, notification.NotificationRequest{
 					NotificationType: notification.NotificationTypeWA,
+					Subject:          notification.DefaultNotificationSubject,
+					Body:             notification.DefaultNotificationBody,
 					Target:           "+6201",
-					TemplateID:       "wa.birthday",
 					TemplateData: map[string]string{
 						"username":  "User Name",
 						"promocode": fakePromo(nil).Code,
@@ -163,7 +165,7 @@ func TestUserBirthday_GiveBirthdayPromo(t *testing.T) {
 			},
 		},
 		{
-			name: `When 2 users to give birthday promo AND 1st user already has birthday promo 
+			name: `When 2 verified birthday users AND 1st user already has birthday promo 
 			Then continue to give the 2nd user birthday promo AND return no error`,
 			ctx: common.ContextWithRequestID(),
 			err: nil,
@@ -204,8 +206,9 @@ func TestUserBirthday_GiveBirthdayPromo(t *testing.T) {
 					Once()
 				notif.On("Send", mock.Anything, notification.NotificationRequest{
 					NotificationType: notification.NotificationTypeEmail,
+					Subject:          notification.DefaultNotificationSubject,
+					Body:             notification.DefaultNotificationBody,
 					Target:           "user.name2@email.com",
-					TemplateID:       "email.birthday",
 					TemplateData: map[string]string{
 						"username":  "User Name 2",
 						"promocode": fakePromo(nil).Code,
@@ -215,8 +218,9 @@ func TestUserBirthday_GiveBirthdayPromo(t *testing.T) {
 					Once()
 				notif.On("Send", mock.Anything, notification.NotificationRequest{
 					NotificationType: notification.NotificationTypeWA,
+					Subject:          notification.DefaultNotificationSubject,
+					Body:             notification.DefaultNotificationBody,
 					Target:           "+6202",
-					TemplateID:       "wa.birthday",
 					TemplateData: map[string]string{
 						"username":  "User Name 2",
 						"promocode": fakePromo(nil).Code,

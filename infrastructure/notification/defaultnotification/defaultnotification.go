@@ -7,35 +7,23 @@ import (
 	"strings"
 	"text/template"
 	"userbirthday/common"
-	"userbirthday/infrastructure"
 	"userbirthday/infrastructure/notification"
-	"userbirthday/infrastructure/repository"
 )
 
 var (
 	ErrInvalidNotificationType = errors.New("invalid notification type")
 )
 
-type DefaultNotification struct {
-	repoNotificationTemplate repository.NotificationTemplateRepository
-}
+type DefaultNotification struct{}
 
-func NewDefaulNotification(infra *infrastructure.Infrastructure) *DefaultNotification {
-	return &DefaultNotification{
-		repoNotificationTemplate: infra.RepoNotificationTemplate(),
-	}
+func NewDefaulNotification() *DefaultNotification {
+	return &DefaultNotification{}
 }
 
 func (dn *DefaultNotification) Send(ctx context.Context, req notification.NotificationRequest) error {
-	text, err := dn.repoNotificationTemplate.GetNotificationTemplate(ctx, req.TemplateID)
+	tmpl, err := template.New("notification").Parse(req.Message())
 	if err != nil {
-		common.LogErr(ctx, "Failed to get notification template", err)
-		return err
-	}
-
-	tmpl, err := template.New("notification").Parse(text)
-	if err != nil {
-		common.LogErr(ctx, "Failed to parse text", err)
+		common.LogErr(ctx, "Failed to parse message", err)
 		return err
 	}
 
@@ -49,7 +37,7 @@ func (dn *DefaultNotification) Send(ctx context.Context, req notification.Notifi
 
 	switch req.NotificationType {
 	case notification.NotificationTypeEmail:
-		fmt.Printf("(EMAIL) Message is sent: %s\n", bTmpl)
+		fmt.Printf("(EMAIL) Message sent: %s\n", bTmpl)
 	case notification.NotificationTypeWA:
 		fmt.Printf("(WA) Message is sent: %s\n", bTmpl)
 	default:

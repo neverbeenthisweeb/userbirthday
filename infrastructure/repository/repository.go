@@ -13,7 +13,3 @@ type UserRepository interface {
 type PromoRepository interface {
 	CreatePromo(ctx context.Context, m model.Promo) (model.Promo, error)
 }
-
-type NotificationTemplateRepository interface {
-	GetNotificationTemplate(ctx context.Context, ID string) (string, error)
-}

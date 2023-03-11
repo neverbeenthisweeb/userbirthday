@@ -6,10 +6,9 @@ import (
 )
 
 type Infrastructure struct {
-	notification             notification.Notification
-	repoUser                 repository.UserRepository
-	repoPromo                repository.PromoRepository
-	repoNotificationTemplate repository.NotificationTemplateRepository
+	notification notification.Notification
+	repoUser     repository.UserRepository
+	repoPromo    repository.PromoRepository
 }
 
 func NewInfrastructure() *Infrastructure {
@@ -38,12 +37,4 @@ func (i *Infrastructure) RepoPromo() repository.PromoRepository {
 
 func (i *Infrastructure) SetRepoPromo(repo repository.PromoRepository) {
 	i.repoPromo = repo
-}
-
-func (i *Infrastructure) RepoNotificationTemplate() repository.NotificationTemplateRepository {
-	return i.repoNotificationTemplate
-}
-
-func (i *Infrastructure) SetRepoNotificationTemplate(repo repository.NotificationTemplateRepository) {
-	i.repoNotificationTemplate = repo
 }

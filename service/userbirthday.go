@@ -68,15 +68,16 @@ func (ub UserBirthday) GiveBirthdayPromo(ctx context.Context) error {
 	return nil
 }
 
-func (ub UserBirthday) sendNotification(ctx context.Context, usr model.User, prm model.Promo) error {
-	if usr.Email != "" {
+func (ub UserBirthday) sendNotification(ctx context.Context, user model.User, promo model.Promo) error {
+	if user.Email != "" {
 		err := ub.notif.Send(ctx, notification.NotificationRequest{
 			NotificationType: notification.NotificationTypeEmail,
-			Target:           usr.Email,
-			TemplateID:       "email.birthday",
+			Subject:          notification.DefaultNotificationSubject,
+			Body:             notification.DefaultNotificationBody,
+			Target:           user.Email,
 			TemplateData: map[string]string{
-				"username":  usr.Name,
-				"promocode": prm.Code,
+				"username":  user.Name,
+				"promocode": promo.Code,
 			},
 		})
 		if err != nil {
@@ -84,14 +85,15 @@ func (ub UserBirthday) sendNotification(ctx context.Context, usr model.User, prm
 		}
 	}
 
-	if usr.Phone != "" {
+	if user.Phone != "" {
 		err := ub.notif.Send(ctx, notification.NotificationRequest{
 			NotificationType: notification.NotificationTypeWA,
-			Target:           usr.Phone,
-			TemplateID:       "wa.birthday",
+			Subject:          notification.DefaultNotificationSubject,
+			Body:             notification.DefaultNotificationBody,
+			Target:           user.Phone,
 			TemplateData: map[string]string{
-				"username":  usr.Name,
-				"promocode": prm.Code,
+				"username":  user.Name,
+				"promocode": promo.Code,
 			},
 		})
 		if err != nil {
