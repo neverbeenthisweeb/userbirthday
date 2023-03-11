@@ -7,7 +7,7 @@ import (
 
 type UserRepository interface {
 	GetVerifiedBirthdayUsers(ctx context.Context) ([]model.User, error)
-	SetPromo(ctx context.CancelFunc, userID, promoCode string) (model.User, error)
+	SetPromo(ctx context.Context, userID, promoCode string) error
 }
 
 type PromoRepository interface {

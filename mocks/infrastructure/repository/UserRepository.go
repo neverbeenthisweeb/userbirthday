@@ -41,27 +41,17 @@ func (_m *UserRepository) GetVerifiedBirthdayUsers(ctx context.Context) ([]model
 }
 
 // SetPromo provides a mock function with given fields: ctx, userID, promoCode
-func (_m *UserRepository) SetPromo(ctx context.CancelFunc, userID string, promoCode string) (model.User, error) {
+func (_m *UserRepository) SetPromo(ctx context.Context, userID string, promoCode string) error {
 	ret := _m.Called(ctx, userID, promoCode)
 
-	var r0 model.User
-	var r1 error
-	if rf, ok := ret.Get(0).(func(context.CancelFunc, string, string) (model.User, error)); ok {
-		return rf(ctx, userID, promoCode)
-	}
-	if rf, ok := ret.Get(0).(func(context.CancelFunc, string, string) model.User); ok {
+	var r0 error
+	if rf, ok := ret.Get(0).(func(context.Context, string, string) error); ok {
 		r0 = rf(ctx, userID, promoCode)
 	} else {
-		r0 = ret.Get(0).(model.User)
+		r0 = ret.Error(0)
 	}
 
-	if rf, ok := ret.Get(1).(func(context.CancelFunc, string, string) error); ok {
-		r1 = rf(ctx, userID, promoCode)
-	} else {
-		r1 = ret.Error(1)
-	}
-
-	return r0, r1
+	return r0
 }
 
 type mockConstructorTestingTNewUserRepository interface {
