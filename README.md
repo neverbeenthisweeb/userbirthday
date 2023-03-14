@@ -14,6 +14,12 @@ See `.env` to do config setups
 |----|--------------------------|-----------------|--------------------------------------------------------------------------|
 | 1  | USER_BIRTHDAY_CRON_EVENT | @every 1h       | See https://pkg.go.dev/github.com/robfig/cron#hdr-CRON_Expression_Format |
 
+### Dependency
+
+- Go (`go1.18.7`)
+- `make` command
+- Docker (`20.10.15`)
+
 ## Diagrams
 
 ### Flow Diagram
