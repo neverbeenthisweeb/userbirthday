@@ -9,8 +9,8 @@ import (
 )
 
 const (
-	PromoTypeBirthday = "birthday"
-
+	PromoTypeBirthday     = "birthday"
+	PromoAmountBirhtday   = 10000
 	PromoUseLimitBirthday = 1
 )
 
@@ -18,6 +18,7 @@ type Promo struct {
 	ID        string
 	Code      string
 	Type      string
+	Amount    int
 	UseCount  int
 	UseLimit  int
 	ValidFrom time.Time
@@ -33,6 +34,7 @@ func NewBirthdayPromo(userName string) Promo {
 			strconv.Itoa(now.Year()),
 		),
 		Type:      PromoTypeBirthday,
+		Amount:    PromoAmountBirhtday,
 		UseLimit:  PromoUseLimitBirthday,
 		ValidFrom: common.GetBeginningOfToday(now),
 		ValidTo:   common.GetBeginningOfTomorrow(now),

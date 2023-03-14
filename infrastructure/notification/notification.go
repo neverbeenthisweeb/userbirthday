@@ -7,15 +7,13 @@ const (
 	NotificationTypeEmail = "Email"
 
 	DefaultNotificationSubject = "Happy Birthday!"
-
-	DefaultNotificationBody = "Hi {{.username}}, Here is a promo {{.promocode}} for you"
+	DefaultNotificationBody    = "Hi {{.username}}, Here is a promo {{.promocode}} for you"
 )
 
 type Notification interface {
 	Send(ctx context.Context, req NotificationRequest) error
 }
 
-// FIXME: Add validation
 type NotificationRequest struct {
 	NotificationType string
 	Subject          string

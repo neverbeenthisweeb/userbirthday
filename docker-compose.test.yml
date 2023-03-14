@@ -1,0 +1,11 @@
+version: '3'
+services:
+  db:
+    image: mysql:5.7
+    container_name: userbirthday-mysql-test
+    env_file:
+      - .env
+    ports:
+      - '3331:3306'
+    volumes:
+      - './script:/script'

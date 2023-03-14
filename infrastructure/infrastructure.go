@@ -1,8 +1,15 @@
 package infrastructure
 
 import (
+	"fmt"
+	"os"
 	"userbirthday/infrastructure/notification"
+	"userbirthday/infrastructure/notification/defaultnotification"
 	"userbirthday/infrastructure/repository"
+	"userbirthday/infrastructure/repository/mysql"
+
+	_ "github.com/go-sql-driver/mysql"
+	"github.com/jmoiron/sqlx"
 )
 
 type Infrastructure struct {
@@ -12,7 +19,27 @@ type Infrastructure struct {
 }
 
 func NewInfrastructure() *Infrastructure {
-	return &Infrastructure{}
+	db := sqlx.MustOpen(
+		"mysql",
+		// "root:password@tcp(127.0.0.1:3332)/userbirthday?parseTime=true",
+		fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=true",
+			os.Getenv("DB_USER"),
+			os.Getenv("DB_PASSWORD"),
+			os.Getenv("DB_URL"),
+			os.Getenv("DB_PORT"),
+			os.Getenv("DB_DATABASE"),
+		),
+	)
+
+	if err := db.Ping(); err != nil {
+		panic("Failed to ping DB. Error: " + err.Error())
+	}
+
+	return &Infrastructure{
+		notification: defaultnotification.NewDefaulNotification(),
+		repoUser:     mysql.NewUserRepository(db),
+		repoPromo:    mysql.NewPromoRepository(db),
+	}
 }
 
 func (i *Infrastructure) Notification() notification.Notification {

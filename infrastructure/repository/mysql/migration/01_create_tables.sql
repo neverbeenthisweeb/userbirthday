@@ -1,0 +1,35 @@
+-- migrate:up
+CREATE TABLE users (
+  id VARCHAR(50) PRIMARY KEY, 
+  name VARCHAR(50), 
+  email VARCHAR(50), 
+  phone VARCHAR(50), 
+  is_verified TINYINT, 
+  birthdate TIMESTAMP NULL, 
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE promotions (
+  id VARCHAR(50) PRIMARY KEY, 
+  code VARCHAR(100), 
+  type VARCHAR(20), 
+  amount INT DEFAULT 0,
+  use_limit INT DEFAULT 0, 
+  valid_from TIMESTAMP NULL, 
+  valid_to TIMESTAMP NULL, 
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE users_promotions (
+  id VARCHAR(50) PRIMARY KEY, 
+  user_id VARCHAR(50), 
+  promotion_id VARCHAR(50), 
+  promotion_use_count INT DEFAULT 0, 
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- migrate:down
+DROP TABLE IF EXISTS users_promotions, users, promotions;

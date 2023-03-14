@@ -3,13 +3,13 @@ package model
 import "time"
 
 type User struct {
+	Promos     []Promo
 	ID         string
 	Name       string
 	Email      string
 	Phone      string
 	IsVerified bool
 	Birthdate  time.Time
-	Promos     []Promo
 }
 
 func (u User) HasBirthdayPromo() bool {

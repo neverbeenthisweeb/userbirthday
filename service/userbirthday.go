@@ -32,17 +32,21 @@ func (ub UserBirthday) GiveBirthdayPromo(ctx context.Context) error {
 		common.LogErr(ctx, "Failed to get verified birthday users", err)
 		return err
 	}
+	if len(users) == 0 {
+		common.LogWarn(ctx, "No verified birthday users found. Finish", nil)
+		return nil
+	}
+	common.LogInfo(ctx, fmt.Sprintf("Found %d verified birthday users. About to validate users", len(users)))
 
 	for _, user := range users {
 		// Validate if user don't have birthday promo yet
 		if user.HasBirthdayPromo() {
-			common.LogInfo(ctx, "Skip user ID="+user.ID+". This user already has birthday promo")
+			common.LogWarn(ctx, "Skip user ID="+user.ID+". This user already has birthday promo", nil)
 			continue
 		}
+		common.LogInfo(ctx, "Processing user ID="+user.ID)
 
 		// Create birthday promo
-		// TODO: Can implement DB transaction between create promo and set promo
-		// to reduce stale data in DB
 		promo := model.NewBirthdayPromo(user.Name)
 		createdPromo, err := ub.repoPromo.CreatePromo(ctx, promo)
 		if err != nil {
@@ -51,7 +55,7 @@ func (ub UserBirthday) GiveBirthdayPromo(ctx context.Context) error {
 		}
 
 		// Set birthday promo to user
-		err = ub.repoUser.SetUserPromo(ctx, user.ID, createdPromo.ID)
+		err = ub.repoUser.UpdateUserPromo(ctx, user.ID, createdPromo.ID)
 		if err != nil {
 			common.LogErr(ctx, fmt.Sprintf("Failed to set user ID=%s with promo ID=%s", user.ID, createdPromo.ID), err)
 			return err

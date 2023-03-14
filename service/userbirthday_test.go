@@ -21,7 +21,7 @@ func TestUserBirthday_GiveBirthdayPromo(t *testing.T) {
 	promoRepo := &mocksRepository.PromoRepository{}
 	notif := &mocksNotification.Notification{}
 
-	infra := infrastructure.NewInfrastructure()
+	infra := &infrastructure.Infrastructure{}
 	infra.SetRepoUser(userRepo)
 	infra.SetRepoPromo(promoRepo)
 	infra.SetNotification(notif)
@@ -107,7 +107,7 @@ func TestUserBirthday_GiveBirthdayPromo(t *testing.T) {
 						return m
 					}), nil).
 					Once()
-				userRepo.On("SetUserPromo", mock.Anything, "1001", "2001").
+				userRepo.On("UpdateUserPromo", mock.Anything, "1001", "2001").
 					Return(errors.New("something went wrong")).
 					Once()
 			},
@@ -135,7 +135,7 @@ func TestUserBirthday_GiveBirthdayPromo(t *testing.T) {
 						return m
 					}), nil).
 					Once()
-				userRepo.On("SetUserPromo", mock.Anything, "1001", "2001").
+				userRepo.On("UpdateUserPromo", mock.Anything, "1001", "2001").
 					Return(nil).
 					Once()
 				notif.On("Send", mock.Anything, notification.NotificationRequest{
@@ -201,7 +201,7 @@ func TestUserBirthday_GiveBirthdayPromo(t *testing.T) {
 						return m
 					}), nil).
 					Once()
-				userRepo.On("SetUserPromo", mock.Anything, "1002", "2002").
+				userRepo.On("UpdateUserPromo", mock.Anything, "1002", "2002").
 					Return(nil).
 					Once()
 				notif.On("Send", mock.Anything, notification.NotificationRequest{
