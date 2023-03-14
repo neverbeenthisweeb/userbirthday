@@ -2,7 +2,8 @@ mocks:
 	mockery --all --keeptree
 
 run:
-	go run .
+	$(MAKE) infra-up && \
+		go run .
 
 infra-up:	
 	$(MAKE) infra-down && \
