@@ -1,5 +1,7 @@
 # User Birthday Promo
 
+A scheduler to send promo notifications.
+
 ## How to use
 
 - To install dependency, run `go mod tidy`
@@ -7,6 +9,10 @@
 - To run program, run `make run`
 
 See `.env` to do config setups
+
+| No | Key                      | Value (example) | Description                                                              |
+|----|--------------------------|-----------------|--------------------------------------------------------------------------|
+| 1  | USER_BIRTHDAY_CRON_EVENT | @every 1h       | See https://pkg.go.dev/github.com/robfig/cron#hdr-CRON_Expression_Format |
 
 ## Diagrams
 
