@@ -12,6 +12,8 @@ See `.env` to do config setups
 
 ### Flow Diagram
 
+![flow diagram](./asset/flow_diagram.png)
+
 ```
 graph TD
    A((START)) --> B(Get verified birthday users)
@@ -24,6 +26,8 @@ graph TD
 ```
 
 ### Sequence Diagram
+
+![sequence diagram](./asset/sequence_diagram.png)
 
 ```
 sequenceDiagram
@@ -58,6 +62,8 @@ sequenceDiagram
 ```
 
 ### ERD
+
+![erd](./asset/erd.png)
 
 ```
 erDiagram
